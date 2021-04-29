@@ -87,11 +87,11 @@ export default class DBFileManager {
   }
 
   static async init(path, ...entities) {
-    await DBFileManager.initializeDirectory(path);
+    await this.initializeDirectory(path);
     const fileNames = entities.map((entity) => entity.getDBName());
 
     for (let file of fileNames) {
-      await DBFileManager.initializeFile(path, file);
+      await this.initializeFile(path, file);
     }
   }
 
