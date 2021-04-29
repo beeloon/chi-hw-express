@@ -1,11 +1,11 @@
 import express from "express";
 
-import { config } from "./config/common.js";
-import DBFileManager from "./lib/DBFileManager.js";
+import { config } from "./config";
+import DBFileManager from "./lib/DBFileManager";
 
-import { user as UserModel } from "./modules/user/user.model.js";
+import { user as UserModel } from "./modules/user/user.model";
 
-import userRouter from "./routes/user.js";
+import { createRouter } from "./routes";
 
 DBFileManager.init(config.pathToDBFolder, UserModel);
 
@@ -14,6 +14,6 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/api/users", userRouter);
+createRouter(app);
 
 app.listen(PORT, console.log(`Server running at http://localhost:${PORT}`));

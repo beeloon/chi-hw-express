@@ -1,5 +1,5 @@
-import { config } from "../../config/common.js";
-import DBFileManager from "../../lib/DBFileManager.js";
+import { config } from "../../config";
+import DBFileManager from "../../lib/DBFileManager";
 
 class User {
   #DBName = "users";

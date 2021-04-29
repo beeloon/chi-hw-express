@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node -r dotenv/config app/server.js"
+    "start": "node --experimental-specifier-resolution=node -r dotenv/config app/server.js"
   },
   "keywords": [],
   "author": "",

@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 
-import { user } from "./user.model.js";
+import { user } from "./user.model";
 
 class UserService {
   constructor() {
