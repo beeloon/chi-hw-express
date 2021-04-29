@@ -3,8 +3,8 @@ import { v4 as uuid } from "uuid";
 import { config } from "../../config";
 import DBFileManager from "../../lib/DBFileManager";
 
-class User {
-  DBName = "users";
+class Post {
+  DBName = "posts";
 
   get DBName() {
     return this.DBName;
@@ -14,10 +14,10 @@ class User {
     this.repository = new DBFileManager(config.pathToDBFolder, this.DBName);
   }
 
-  async create(userData) {
+  async create(postData) {
     const id = uuid();
 
-    await this.repository.addEntityToFile({ id, ...userData });
+    await this.repository.addEntityToFile({ id, ...postData });
   }
 
   async findOne(id) {
@@ -35,6 +35,10 @@ class User {
   async deleteOne(id) {
     await this.repository.deleteEntityFromFile(id);
   }
+
+  async deleteManyById(authorId) {
+    await this.repository.deleteAllEntitiesBy(["authorId", authorId]);
+  }
 }
 
-export const user = new User();
+export const post = new Post();

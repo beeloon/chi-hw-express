@@ -1,6 +1,7 @@
 import { STATUS_CODES } from "http";
 
 import { userService } from "./user.service";
+import { postService } from "../post/post.service";
 
 export default class UserController {
   async signupUser(req, res) {
@@ -54,7 +55,21 @@ export default class UserController {
       const { id } = req.params;
 
       await userService.deleteUserById(id);
+      await postService.deleteAllPosts(id);
       res.end(STATUS_CODES[200]);
+    } catch (err) {
+      res.end(STATUS_CODES[404]);
+    }
+  }
+
+  async addNewPost(req, res) {
+    try {
+      const authorId = req.params.id;
+      const post = req.body;
+
+      await postService.createPost({ authorId, ...post });
+
+      res.end(STATUS_CODES[201]);
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }

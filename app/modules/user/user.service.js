@@ -1,5 +1,3 @@
-import { v4 as uuid } from "uuid";
-
 import { user } from "./user.model";
 
 class UserService {
@@ -10,10 +8,7 @@ class UserService {
   async createUser(userData) {
     console.log(`POST /user :: Create new user with name: ${userData.name}`);
 
-    const id = uuid();
-    const newUser = { ...userData, id };
-
-    await this.user.create(newUser);
+    await this.user.create(userData);
   }
 
   async findUserById(userId) {
