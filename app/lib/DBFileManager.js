@@ -62,6 +62,21 @@ export default class DBFileManager {
     await this.setFileContent(this.file, JSON.stringify(newContent));
   }
 
+  async deleteAllEntitiesBy(property = null) {
+    if (property) {
+      const [propName, propValue] = property;
+
+      const fileContent = await this.getFileContent(this.file);
+      const filteredContent = fileContent.filter(
+        (entity) => entity[propName] !== propValue
+      );
+
+      await this.setFileContent(this.file, JSON.stringify(filteredContent));
+    } else {
+      await this.setFileContent(this.file, JSON.stringify([]));
+    }
+  }
+
   async getFileContent(filename) {
     const pathToFile = resolve(this.path, `${filename}.json`);
 
