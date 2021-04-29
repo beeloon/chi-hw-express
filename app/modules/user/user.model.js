@@ -2,18 +2,14 @@ import { config } from "../../config";
 import DBFileManager from "../../lib/DBFileManager";
 
 class User {
-  #DBName = "users";
+  DBName = "users";
+
+  get DBName() {
+    return this.DBName;
+  }
 
   constructor() {
-    this.repository = new DBFileManager(config.pathToDBFolder, this.#DBName);
-  }
-
-  getDBName() {
-    return this.#DBName;
-  }
-
-  async init() {
-    await this.repository.init();
+    this.repository = new DBFileManager(config.pathToDBFolder, this.DBName);
   }
 
   async create(userData) {

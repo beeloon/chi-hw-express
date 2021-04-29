@@ -88,7 +88,7 @@ export default class DBFileManager {
 
   static async init(path, ...entities) {
     await this.initializeDirectory(path);
-    const fileNames = entities.map((entity) => entity.getDBName());
+    const fileNames = entities.map((entity) => entity.DBName);
 
     for (let file of fileNames) {
       await this.initializeFile(path, file);
