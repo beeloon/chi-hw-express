@@ -10,6 +10,7 @@ export const createUserRoutes = (router) => {
   userRouter.post("/", userController.signupUser);
 
   userRouter.get("/:id", userController.getUser);
+  userRouter.post("/:id", userController.addNewPost);
   userRouter.patch("/:id", userController.updateUser);
   userRouter.delete("/:id", userController.deleteUser);
 
