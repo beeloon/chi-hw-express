@@ -43,6 +43,7 @@ export default class DBFileManager {
       if (entity.id === id) {
         return {
           id,
+          ...entity,
           ...newData,
         };
       }
