@@ -9,8 +9,8 @@ export default class DBFileManager {
 
   static async init(path, ...entities) {
     await this.initializeDirectory(path);
-    const fileNames = entities.map((entity) => entity.DBName);
 
+    const fileNames = entities.map((entity) => entity.getDBName());
     for (let file of fileNames) {
       await this.initializeFile(path, file);
     }
@@ -47,42 +47,6 @@ export default class DBFileManager {
     return entityData;
   }
 
-  async getEntityFromFileById(id) {
-    const fileContent = await this.getFileContent(this.file);
-
-    const result = fileContent.find((entity) => entity.id === id);
-
-    if (result) {
-      return result;
-    } else {
-      throw new Error(`The entity with id ${id} doesn't exist.`);
-    }
-  }
-
-  async getAllEntitiesFromFile() {
-    const fileContent = await this.getFileContent(this.file);
-
-    return fileContent;
-  }
-
-  async updateEntityById(id, newData) {
-    const fileContent = await this.getFileContent(this.file);
-
-    const newContent = fileContent.map((entity) =>
-      entity.id === id
-        ? {
-            id,
-            ...entity,
-            ...newData,
-          }
-        : entity
-    );
-
-    await this.setFileContent(this.file, JSON.stringify(newContent));
-
-    return { id, ...newData };
-  }
-
   async deleteEntityFromFile(id) {
     const fileContent = await this.getFileContent(this.file);
     const newContent = fileContent.filter((entity) => entity.id !== id);
@@ -103,6 +67,24 @@ export default class DBFileManager {
     } else {
       await this.setFileContent(this.file, JSON.stringify([]));
     }
+  }
+
+  async getEntityFromFileById(id) {
+    const fileContent = await this.getFileContent(this.file);
+
+    const result = fileContent.find((entity) => entity.id === id);
+
+    if (result) {
+      return result;
+    } else {
+      throw new Error(`The entity with id ${id} doesn't exist.`);
+    }
+  }
+
+  async getAllEntitiesFromFile() {
+    const fileContent = await this.getFileContent(this.file);
+
+    return fileContent;
   }
 
   async getFileContent(filename) {
@@ -127,5 +109,23 @@ export default class DBFileManager {
     } catch (err) {
       throw new Error(err);
     }
+  }
+
+  async updateEntityById(id, newData) {
+    const fileContent = await this.getFileContent(this.file);
+
+    const newContent = fileContent.map((entity) =>
+      entity.id === id
+        ? {
+            id,
+            ...entity,
+            ...newData,
+          }
+        : entity
+    );
+
+    await this.setFileContent(this.file, JSON.stringify(newContent));
+
+    return { id, ...newData };
   }
 }

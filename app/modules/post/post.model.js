@@ -1,19 +1,8 @@
 import { v4 as uuid } from "uuid";
 
-import config from "../../config";
-import DBFileManager from "../../lib/DBFileManager";
+import Entity from "../../lib/Entity";
 
-class Post {
-  DBName = "posts";
-
-  get DBName() {
-    return this.DBName;
-  }
-
-  constructor() {
-    this.repository = new DBFileManager(config.pathToDBFolder, this.DBName);
-  }
-
+class Post extends Entity {
   async create(postData) {
     const id = uuid();
 
@@ -41,4 +30,4 @@ class Post {
   }
 }
 
-export const post = new Post();
+export const post = new Post("posts");
