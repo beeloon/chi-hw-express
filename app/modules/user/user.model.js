@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 
-import { config } from "../../config";
+import config from "../../config";
 import DBFileManager from "../../lib/DBFileManager";
 
 class User {
