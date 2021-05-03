@@ -12,7 +12,7 @@ export const createPostRoutes = (router) => {
   postRouter.patch("/:id", postController.updatePost);
   postRouter.delete("/:id", postController.deletePost);
 
-  postRouter.get("/user/:authorId", postController.getPostByAuthorId);
+  postRouter.get("/user/:authorId", postController.getPostsByAuthorId);
 
   router.use("/posts", postRouter);
 };

@@ -24,7 +24,7 @@ export default class PostController {
     }
   }
 
-  async getPostByAuthorId(req, res) {
+  async getPostsByAuthorId(req, res) {
     try {
       const { authorId } = req.params;
 
