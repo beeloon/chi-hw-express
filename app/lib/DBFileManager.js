@@ -72,13 +72,7 @@ export default class DBFileManager {
   async getEntityFromFileById(id) {
     const fileContent = await this.getFileContent(this.file);
 
-    const result = fileContent.find((entity) => entity.id === id);
-
-    if (result) {
-      return result;
-    } else {
-      throw new Error(`The entity with id ${id} doesn't exist.`);
-    }
+    return fileContent.find((entity) => entity.id === id);
   }
 
   async getAllEntitiesFromFile() {
@@ -91,9 +85,7 @@ export default class DBFileManager {
     const pathToFile = resolve(this.path, `${filename}.json`);
 
     try {
-      const fileContent = await readFile(pathToFile, "utf-8");
-
-      return JSON.parse(fileContent);
+      return JSON.parse(await readFile(pathToFile, "utf-8"));
     } catch (err) {
       throw new Error(err);
     }
@@ -104,8 +96,6 @@ export default class DBFileManager {
 
     try {
       await writeFile(pathToFile, content);
-
-      return content;
     } catch (err) {
       throw new Error(err);
     }
