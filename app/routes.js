@@ -1,7 +1,7 @@
 import express from "express";
 
-import { createUserRoutes } from "./user";
-import { createPostRoutes } from "./post";
+import { createUserRoutes } from "./modules/user/user.routes";
+import { createPostRoutes } from "./modules/post/post.routes";
 
 export const createRouter = (app) => {
   const router = express.Router();
