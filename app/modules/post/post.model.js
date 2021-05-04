@@ -1,6 +1,6 @@
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 
-import Entity from "../../lib/Entity";
+import Entity from '../../lib/Entity';
 
 class Post extends Entity {
   async create(postData) {
@@ -32,10 +32,10 @@ class Post extends Entity {
   }
 
   async deleteManyById(authorId) {
-    await this.repository.deleteAllEntitiesBy(["authorId", authorId]);
+    await this.repository.deleteAllEntitiesBy(['authorId', authorId]);
   }
 }
 
-const postModel = new Post("posts");
+const postModel = new Post('posts');
 
 export default postModel;

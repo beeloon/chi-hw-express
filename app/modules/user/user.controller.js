@@ -1,7 +1,7 @@
-import { STATUS_CODES } from "http";
+import { STATUS_CODES } from 'http';
 
-import userService from "./user.service";
-import postService from "../post/post.service";
+import userService from './user.service';
+import postService from '../post/post.service';
 
 export default class UserController {
   async signupUser(req, res) {

@@ -1,18 +1,18 @@
-import express from "express";
+import express from 'express';
 
-import PostController from "./post.controller";
+import PostController from './post.controller';
 
 export const createPostRoutes = (router) => {
   const postRouter = express.Router();
   const postController = new PostController();
 
-  postRouter.get("/", postController.listPosts);
-  postRouter.get("/:id", postController.getPost);
+  postRouter.get('/', postController.listPosts);
+  postRouter.get('/:id', postController.getPost);
 
-  postRouter.patch("/:id", postController.updatePost);
-  postRouter.delete("/:id", postController.deletePost);
+  postRouter.patch('/:id', postController.updatePost);
+  postRouter.delete('/:id', postController.deletePost);
 
-  postRouter.get("/user/:authorId", postController.getPostsByAuthorId);
+  postRouter.get('/user/:authorId', postController.getPostsByAuthorId);
 
-  router.use("/posts", postRouter);
+  router.use('/posts', postRouter);
 };

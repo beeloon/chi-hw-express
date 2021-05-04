@@ -1,5 +1,5 @@
-import { resolve } from "path";
-import { writeFile, readFile, access, mkdir } from "fs/promises";
+import { resolve } from 'path';
+import { writeFile, readFile, access, mkdir } from 'fs/promises';
 
 export default class DBFileManager {
   constructor(path, file) {
@@ -22,7 +22,7 @@ export default class DBFileManager {
     try {
       await access(filePath);
     } catch (err) {
-      await writeFile(filePath, "[]");
+      await writeFile(filePath, '[]');
     }
   }
 
@@ -85,7 +85,7 @@ export default class DBFileManager {
     const pathToFile = resolve(this.path, `${filename}.json`);
 
     try {
-      return JSON.parse(await readFile(pathToFile, "utf-8"));
+      return JSON.parse(await readFile(pathToFile, 'utf-8'));
     } catch (err) {
       throw new Error(err);
     }

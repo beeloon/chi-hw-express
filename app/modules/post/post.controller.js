@@ -1,6 +1,6 @@
-import { STATUS_CODES } from "http";
+import { STATUS_CODES } from 'http';
 
-import postService from "./post.service";
+import postService from './post.service';
 
 export default class PostController {
   async listPosts(req, res) {

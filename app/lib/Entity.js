@@ -1,5 +1,5 @@
-import config from "../config";
-import DBFileManager from "./DBFileManager";
+import config from '../config';
+import DBFileManager from './DBFileManager';
 
 class Entity {
   constructor(DBName) {

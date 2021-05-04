@@ -1,4 +1,4 @@
-import postModel from "./post.model";
+import postModel from './post.model';
 
 class PostService {
   constructor() {

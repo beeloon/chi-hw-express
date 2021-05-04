@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express';
 
-import config from "./config";
-import { initializeDB } from "./utils";
-import { createRouter } from "./routes";
-import { requestLogger } from "./middleware";
+import config from './config';
+import { initializeDB } from './utils';
+import { createRouter } from './routes';
+import { requestLogger } from './middleware';
 
 const PORT = config.serverPort;
 const app = express();

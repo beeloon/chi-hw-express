@@ -1,6 +1,6 @@
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 
-import Entity from "../../lib/Entity";
+import Entity from '../../lib/Entity';
 
 class User extends Entity {
   async create(userData) {
@@ -36,6 +36,6 @@ class User extends Entity {
   }
 }
 
-const userModel = new User("users");
+const userModel = new User('users');
 
 export default userModel;
