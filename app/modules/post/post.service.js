@@ -1,57 +1,47 @@
-import { post } from "./post.model";
+import postModel from "./post.model";
 
 class PostService {
   constructor() {
-    this.post = post;
+    this.postModel = postModel;
   }
 
   async createPost(postData) {
-    console.log(
-      `POST /api/users/id :: Create new post for user with id: ${postData.authorId}`
-    );
-
-    await this.post.create(postData);
+    await this.postModel.create(postData);
   }
 
   async findPostById(postId) {
-    console.log(`GET /api/post/:id :: Get single post by id: ${postId}`);
+    const post = await this.postModel.findOne(postId);
 
-    return await this.post.findOne(postId);
+    return post;
   }
 
   async findAllPostsByAuthorId(authorId) {
-    console.log(
-      `GET /api/post/:authorId :: Get single post by id: ${authorId}`
-    );
-
-    const posts = await this.post.findAll();
+    const posts = await this.postModel.findAll();
 
     return posts.filter((post) => post.authorId === authorId);
   }
 
   async findAllPosts() {
-    console.log(`GET /api/post :: Get all posts from db`);
+    const postList = await this.postModel.findAll();
 
-    return await this.post.findAll();
+    return postList;
   }
 
   async updatePostById(postId, newPostData) {
-    console.log(`PATCH /api/post/:id :: Update single post by id: ${postId}`);
+    const updatedPost = await this.postModel.updateOne(postId, newPostData);
 
-    return await this.post.updateOne(postId, newPostData);
+    return updatedPost;
   }
 
   async deletePostById(postId) {
-    console.log(`DELETE /api/post/:id :: Delete single post by id: ${postId}`);
-
-    await this.post.deleteOne(postId);
+    await this.postModel.deleteOne(postId);
   }
 
   async deleteAllPosts(authorId) {
-    console.log(`Delete all posts from a user with id: ${authorId}`);
-
-    await this.post.deleteManyById(authorId);
+    await this.postModel.deleteManyById(authorId);
   }
 }
 
-export const postService = new PostService();
+const postService = new PostService();
+
+export default postService;

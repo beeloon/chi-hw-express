@@ -1,39 +1,37 @@
-import { user } from "./user.model";
+import userModel from "./user.model";
 
 class UserService {
   constructor() {
-    this.user = user;
+    this.userModel = userModel;
   }
 
   async createUser(userData) {
-    console.log(`POST /user :: Create new user with name: ${userData.name}`);
-
-    await this.user.create(userData);
+    await this.userModel.create(userData);
   }
 
   async findUserById(userId) {
-    console.log(`GET /user/:id :: Get single user by id: ${userId}`);
+    const user = await this.userModel.findOne(userId);
 
-    return await this.user.findOne(userId);
+    return user;
   }
 
   async findAllUsers() {
-    console.log(`GET /user :: Get all users from db`);
+    const userList = await this.userModel.findAll();
 
-    return await this.user.findAll();
+    return userList;
   }
 
   async updateUserById(userId, newUserData) {
-    console.log(`PATCH /user/:id :: Update single user by id: ${userId}`);
+    const updatedUser = await this.userModel.updateOne(userId, newUserData);
 
-    return await this.user.updateOne(userId, newUserData);
+    return updatedUser;
   }
 
   async deleteUserById(userId) {
-    console.log(`DELETE /user/:id :: Delete single user by id: ${userId}`);
-
-    await this.user.deleteOne(userId);
+    await this.userModel.deleteOne(userId);
   }
 }
 
-export const userService = new UserService();
+const userService = new UserService();
+
+export default userService;

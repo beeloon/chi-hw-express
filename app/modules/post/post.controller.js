@@ -1,6 +1,6 @@
 import { STATUS_CODES } from "http";
 
-import { postService } from "./post.service";
+import postService from "./post.service";
 
 export default class PostController {
   async listPosts(req, res) {
@@ -28,9 +28,9 @@ export default class PostController {
     try {
       const { authorId } = req.params;
 
-      const posts = await postService.findAllPostsByAuthorId(authorId);
+      const postList = await postService.findAllPostsByAuthorId(authorId);
 
-      res.end(JSON.stringify(posts));
+      res.end(JSON.stringify(postList));
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }

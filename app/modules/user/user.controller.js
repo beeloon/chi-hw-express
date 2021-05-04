@@ -1,7 +1,7 @@
 import { STATUS_CODES } from "http";
 
-import { userService } from "./user.service";
-import { postService } from "../post/post.service";
+import userService from "./user.service";
+import postService from "../post/post.service";
 
 export default class UserController {
   async signupUser(req, res) {
@@ -21,7 +21,7 @@ export default class UserController {
       const { id } = req.params;
       const user = await userService.findUserById(id);
 
-      res.end(JSON.stringify(user));
+      res.json(user);
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }
@@ -29,9 +29,9 @@ export default class UserController {
 
   async listUsers(req, res) {
     try {
-      const users = await userService.findAllUsers();
+      const userList = await userService.findAllUsers();
 
-      res.end(JSON.stringify(users));
+      res.json(userList);
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }
@@ -40,11 +40,11 @@ export default class UserController {
   async updateUser(req, res) {
     try {
       const { id } = req.params;
-      const newUser = req.body;
+      const userUpdateData = req.body;
 
-      const updatedUser = await userService.updateUserById(id, newUser);
+      const updatedUser = await userService.updateUserById(id, userUpdateData);
 
-      res.end(JSON.stringify(updatedUser));
+      res.json(updatedUser);
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }

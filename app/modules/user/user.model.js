@@ -10,15 +10,25 @@ class User extends Entity {
   }
 
   async findOne(id) {
-    return await this.repository.getEntityFromFileById(id);
+    const user = await this.repository.getEntityFromFileById(id);
+
+    if (!user) {
+      throw new Error(`The entity with id ${id} doesn't exist.`);
+    }
+
+    return user;
   }
 
   async findAll() {
-    return await this.repository.getAllEntitiesFromFile();
+    const userList = await this.repository.getAllEntitiesFromFile();
+
+    return userList;
   }
 
   async updateOne(id, data) {
-    return await this.repository.updateEntityById(id, data);
+    const updatedUser = await this.repository.updateEntityById(id, data);
+
+    return updatedUser;
   }
 
   async deleteOne(id) {
@@ -26,4 +36,6 @@ class User extends Entity {
   }
 }
 
-export const user = new User("users");
+const userModel = new User("users");
+
+export default userModel;

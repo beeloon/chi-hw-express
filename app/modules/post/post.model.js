@@ -10,15 +10,21 @@ class Post extends Entity {
   }
 
   async findOne(id) {
-    return await this.repository.getEntityFromFileById(id);
+    const post = await this.repository.getEntityFromFileById(id);
+
+    return post;
   }
 
   async findAll() {
-    return await this.repository.getAllEntitiesFromFile();
+    const postList = await this.repository.getAllEntitiesFromFile();
+
+    return postList;
   }
 
   async updateOne(id, data) {
-    return await this.repository.updateEntityById(id, data);
+    const updatedPost = await this.repository.updateEntityById(id, data);
+
+    return updatedPost;
   }
 
   async deleteOne(id) {
@@ -30,4 +36,6 @@ class Post extends Entity {
   }
 }
 
-export const post = new Post("posts");
+const postModel = new Post("posts");
+
+export default postModel;
