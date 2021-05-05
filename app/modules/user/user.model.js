@@ -12,10 +12,6 @@ class User extends Entity {
   async findOne(id) {
     const user = await this.repository.getEntityFromFileById(id);
 
-    if (!user) {
-      throw new Error(`The entity with id ${id} doesn't exist.`);
-    }
-
     return user;
   }
 

@@ -12,6 +12,10 @@ class UserService {
   async findUserById(userId) {
     const user = await this.userModel.findOne(userId);
 
+    if (!user) {
+      throw new Error(`User with id ${id} doesn't exist.`);
+    }
+
     return user;
   }
 
