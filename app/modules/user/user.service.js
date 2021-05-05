@@ -5,8 +5,8 @@ class UserService {
     this.userModel = userModel;
   }
 
-  async createUser(userData) {
-    await this.userModel.create(userData);
+  createUser(userData) {
+    return this.userModel.create(userData);
   }
 
   async findUserById(userId) {
@@ -19,20 +19,16 @@ class UserService {
     return user;
   }
 
-  async findAllUsers() {
-    const userList = await this.userModel.findAll();
-
-    return userList;
+  findAllUsers() {
+    return this.userModel.findAll();
   }
 
-  async updateUserById(userId, newUserData) {
-    const updatedUser = await this.userModel.updateOne(userId, newUserData);
-
-    return updatedUser;
+  updateUserById(userId, newUserData) {
+    return this.userModel.updateOne(userId, newUserData);
   }
 
-  async deleteUserById(userId) {
-    await this.userModel.deleteOne(userId);
+  deleteUserById(userId) {
+    return this.userModel.deleteOne(userId);
   }
 }
 

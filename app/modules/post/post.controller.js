@@ -7,7 +7,7 @@ export default class PostController {
     try {
       const posts = await postService.findAllPosts();
 
-      res.end(JSON.stringify(posts));
+      res.json(posts);
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }
@@ -18,7 +18,7 @@ export default class PostController {
       const { id } = req.params;
       const user = await postService.findPostById(id);
 
-      res.end(JSON.stringify(user));
+      res.json(user);
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }
@@ -30,7 +30,7 @@ export default class PostController {
 
       const postList = await postService.findAllPostsByAuthorId(authorId);
 
-      res.end(JSON.stringify(postList));
+      res.json(postList);
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }
@@ -39,11 +39,11 @@ export default class PostController {
   async updatePost(req, res) {
     try {
       const { id } = req.params;
-      const newPost = req.body;
+      const postUpdateBody = req.body;
 
-      const updatedPost = await postService.updatePostById(id, newPost);
+      const updatedPost = await postService.updatePostById(id, postUpdateBody);
 
-      res.end(JSON.stringify(updatedPost));
+      res.json(updatedPost);
     } catch (err) {
       res.end(STATUS_CODES[404]);
     }

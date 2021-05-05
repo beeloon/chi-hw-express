@@ -5,14 +5,12 @@ class PostService {
     this.postModel = postModel;
   }
 
-  async createPost(postData) {
-    await this.postModel.create(postData);
+  createPost(postData) {
+    return this.postModel.create(postData);
   }
 
-  async findPostById(postId) {
-    const post = await this.postModel.findOne(postId);
-
-    return post;
+  findPostById(postId) {
+    return this.postModel.findOne(postId);
   }
 
   async findAllPostsByAuthorId(authorId) {
@@ -21,24 +19,20 @@ class PostService {
     return posts.filter((post) => post.authorId === authorId);
   }
 
-  async findAllPosts() {
-    const postList = await this.postModel.findAll();
-
-    return postList;
+  findAllPosts() {
+    return this.postModel.findAll();
   }
 
-  async updatePostById(postId, newPostData) {
-    const updatedPost = await this.postModel.updateOne(postId, newPostData);
-
-    return updatedPost;
+  updatePostById(postId, newPostData) {
+    return this.postModel.updateOne(postId, newPostData);
   }
 
-  async deletePostById(postId) {
-    await this.postModel.deleteOne(postId);
+  deletePostById(postId) {
+    return this.postModel.deleteOne(postId);
   }
 
-  async deleteAllPosts(authorId) {
-    await this.postModel.deleteManyById(authorId);
+  deleteAllPosts(authorId) {
+    return this.postModel.deleteManyById(authorId);
   }
 }
 

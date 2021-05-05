@@ -40,9 +40,9 @@ export default class UserController {
   async updateUser(req, res) {
     try {
       const { id } = req.params;
-      const userUpdateData = req.body;
+      const userUpdateBody = req.body;
 
-      const updatedUser = await userService.updateUserById(id, userUpdateData);
+      const updatedUser = await userService.updateUserById(id, userUpdateBody);
 
       res.json(updatedUser);
     } catch (err) {

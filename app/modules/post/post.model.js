@@ -3,36 +3,30 @@ import { v4 as uuid } from 'uuid';
 import Entity from '../../lib/Entity';
 
 class Post extends Entity {
-  async create(postData) {
+  create(postData) {
     const id = uuid();
 
-    await this.repository.addEntityToFile({ id, ...postData });
+    return this.repository.addEntityToFile({ id, ...postData });
   }
 
-  async findOne(id) {
-    const post = await this.repository.getEntityFromFileById(id);
-
-    return post;
+  findOne(id) {
+    return this.repository.getEntityFromFileById(id);
   }
 
-  async findAll() {
-    const postList = await this.repository.getAllEntitiesFromFile();
-
-    return postList;
+  findAll() {
+    return this.repository.getAllEntitiesFromFile();
   }
 
-  async updateOne(id, data) {
-    const updatedPost = await this.repository.updateEntityById(id, data);
-
-    return updatedPost;
+  updateOne(id, data) {
+    return this.repository.updateEntityById(id, data);
   }
 
-  async deleteOne(id) {
-    await this.repository.deleteEntityFromFile(id);
+  deleteOne(id) {
+    return this.repository.deleteEntityFromFile(id);
   }
 
   async deleteManyById(authorId) {
-    await this.repository.deleteAllEntitiesBy(['authorId', authorId]);
+    return this.repository.deleteAllEntitiesBy(['authorId', authorId]);
   }
 }
 
