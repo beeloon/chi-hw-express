@@ -3,4 +3,4 @@ const config = {
   serverPort: process.env.PORT,
 };
 
-export default config;
+module.exports = config;

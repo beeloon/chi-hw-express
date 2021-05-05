@@ -1,11 +1,11 @@
 import express from 'express';
 
-import config from './config';
+import config from 'config';
 import { initializeDB } from './utils';
 import { createRouter } from './routes';
 import { requestLogger } from './middleware';
 
-const PORT = config.serverPort;
+const PORT = config.get('serverPort');
 const app = express();
 
 app.use(requestLogger);
