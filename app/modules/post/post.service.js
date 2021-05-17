@@ -36,7 +36,7 @@ export default class PostService {
     return deletedPost;
   }
 
-  static async deleteAllPosts() {
+  static async deletePosts() {
     await postModel.destroy({ where: {} });
   }
 }

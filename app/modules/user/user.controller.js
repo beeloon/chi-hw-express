@@ -45,9 +45,7 @@ export default class UserController {
   }
 
   static async deleteAllUsers(req, res, next) {
-    const { id } = req.params;
-
-    await userService.deleteUsers(id);
+    await userService.deleteUsers();
 
     res.sendStatus(200);
   }

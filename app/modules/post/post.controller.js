@@ -38,4 +38,10 @@ export default class PostController {
 
     res.sendStatus(200);
   }
+
+  static async deleteAllPosts(req, res, next) {
+    await postService.deletePosts();
+
+    res.sendStatus(200);
+  }
 }

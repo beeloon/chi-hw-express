@@ -5,8 +5,9 @@ import postController from './post.controller';
 export const createPostRoutes = (router) => {
   const postRouter = express.Router();
 
-  postRouter.post('/', postController.addPost);
   postRouter.get('/', postController.listPosts);
+  postRouter.post('/', postController.addPost);
+  postRouter.delete('/', postController.deleteAllPosts);
 
   postRouter.get('/:id', postController.getPost);
   postRouter.patch('/:id', postController.updatePost);
