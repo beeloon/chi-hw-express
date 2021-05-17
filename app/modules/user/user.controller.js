@@ -19,6 +19,14 @@ export default class UserController {
     res.json(userList);
   }
 
+  static async listUserPosts(req, res, next) {
+    const { id } = req.params;
+
+    const userPosts = await userService.getUserPosts(id);
+
+    res.json(userPosts);
+  }
+
   static async updateUser(req, res, next) {
     const { id } = req.params;
     const userUpdateBody = req.body;

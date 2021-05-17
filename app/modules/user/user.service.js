@@ -1,6 +1,10 @@
 import database from '../../database';
 
-const { User: userModel, Follower: followerModel } = database.models;
+const {
+  User: userModel,
+  Follower: followerModel,
+  Post: postModel,
+} = database.models;
 
 export default class UserService {
   static async createUser(userData) {
@@ -43,6 +47,13 @@ export default class UserService {
     const userList = await userModel.findAll();
 
     return userList;
+  }
+
+  static async getUserPosts(authorId) {
+    const user = await this.findUserById(authorId);
+    const userPostList = postModel.findAll({ where: { authorId: user.id } });
+
+    return userPostList;
   }
 
   static async getFollowersByUserId(userId) {

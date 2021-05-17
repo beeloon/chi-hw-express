@@ -15,13 +15,6 @@ export default class PostController {
     res.json(posts);
   }
 
-  static async getPostsByAuthorId(req, res, next) {
-    const { authorId } = req.params;
-    const posts = await postService.findAllPostsByAuthorId(authorId);
-
-    res.end(JSON.stringify(posts));
-  }
-
   static async getPost(req, res, next) {
     const { id } = req.params;
     const post = await postService.findPostById(id);

@@ -22,13 +22,6 @@ export default class PostService {
     return post;
   }
 
-  static async findAllPostsByAuthorId(authorId) {
-    const author = await userModel.findOne({ where: { id: authorId } });
-    const posts = await postModel.findAll({ where: { authorId: author.id } });
-
-    return posts;
-  }
-
   static async updatePostById(postId, postUpdateBody) {
     const updatedPost = await postModel.update(postUpdateBody, {
       where: { id: postId },

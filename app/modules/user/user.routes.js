@@ -1,4 +1,5 @@
 import express from 'express';
+import UserController from './user.controller';
 
 import userController from './user.controller';
 
@@ -15,6 +16,8 @@ export const createUserRoutes = (router) => {
 
   userRouter.get('/:id/followers', userController.getUserFollowers);
   userRouter.post('/:id/followers', userController.addFollower);
+
+  userRouter.get('/:id/posts', UserController.listUserPosts);
 
   router.use('/users', userRouter);
 };
