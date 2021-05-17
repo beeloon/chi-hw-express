@@ -1,35 +1,25 @@
-import { v4 as uuid } from 'uuid';
+import SequelizeModule from 'sequelize';
 
-import Entity from '../../lib/Entity';
-
-class Post extends Entity {
-  create(postData) {
-    const id = uuid();
-
-    return this.repository.addEntityToFile({ id, ...postData });
+export default class PostModel extends SequelizeModule.Model {
+  static init(sequelize) {
+    return super.init(
+      {
+        id: {
+          primaryKey: true,
+          type: SequelizeModule.UUID,
+          defaultValue: SequelizeModule.UUIDV4,
+        },
+        text: SequelizeModule.TEXT,
+        authorId: SequelizeModule.UUID,
+      },
+      { timestamps: false, tableName: 'posts', sequelize }
+    );
   }
 
-  findOne(id) {
-    return this.repository.getEntityFromFileById(id);
-  }
-
-  findAll() {
-    return this.repository.getAllEntitiesFromFile();
-  }
-
-  updateOne(id, data) {
-    return this.repository.updateEntityById(id, data);
-  }
-
-  deleteOne(id) {
-    return this.repository.deleteEntityFromFile(id);
-  }
-
-  async deleteManyById(authorId) {
-    return this.repository.deleteAllEntitiesBy(['authorId', authorId]);
+  static associate(models) {
+    this.belongsTo(models.User, {
+      foreignKey: 'authorId',
+      onDelete: 'CASCADE',
+    });
   }
 }
-
-const postModel = new Post('posts');
-
-export default postModel;

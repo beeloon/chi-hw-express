@@ -1,31 +1,40 @@
-import { v4 as uuid } from 'uuid';
+import SequelizeModule from 'sequelize';
 
-import Entity from '../../lib/Entity';
-
-class User extends Entity {
-  create(userData) {
-    const id = uuid();
-
-    return this.repository.addEntityToFile({ id, ...userData });
+export default class UserModel extends SequelizeModule.Model {
+  static init(sequelize) {
+    return super.init(
+      {
+        id: {
+          type: SequelizeModule.UUID,
+          primaryKey: true,
+          defaultValue: SequelizeModule.UUIDV4,
+        },
+        username: {
+          type: SequelizeModule.STRING,
+          allowNull: false,
+        },
+        email: {
+          type: SequelizeModule.STRING,
+          allowNull: false,
+          notEmpty: true,
+          validate: {
+            isEmail: true,
+          },
+        },
+      },
+      { timestamps: false, tableName: 'users', sequelize }
+    );
   }
 
-  findOne(id) {
-    return this.repository.getEntityFromFileById(id);
-  }
-
-  findAll() {
-    return this.repository.getAllEntitiesFromFile();
-  }
-
-  updateOne(id, data) {
-    return this.repository.updateEntityById(id, data);
-  }
-
-  deleteOne(id) {
-    return this.repository.deleteEntityFromFile(id);
+  static associate(models) {
+    this.hasMany(models.Post, {
+      foreignKey: 'authorId',
+    });
+    this.hasMany(models.Follower, {
+      foreignKey: 'followerId',
+    });
+    this.hasMany(models.Follower, {
+      foreignKey: 'targetId',
+    });
   }
 }
-
-const userModel = new User('users');
-
-export default userModel;

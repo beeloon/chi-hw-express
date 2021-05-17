@@ -1,41 +1,49 @@
-import postModel from './post.model';
+import database from '../../database';
 
-class PostService {
-  constructor() {
-    this.postModel = postModel;
+const { Post: postModel, User: userModel } = database.models;
+
+export default class PostService {
+  static async createPost(authorId, text) {
+    const author = await userModel.findOne({ where: { id: authorId } });
+    const post = await postModel.create({ text, authorId: author.id });
+
+    return post;
   }
 
-  createPost(postData) {
-    return this.postModel.create(postData);
+  static async findAllPosts() {
+    const postList = await postModel.findAll();
+
+    return postList;
   }
 
-  findPostById(postId) {
-    return this.postModel.findOne(postId);
+  static async findPostById(postId) {
+    const post = await postModel.findOne({ where: { id: postId } });
+
+    return post;
   }
 
-  async findAllPostsByAuthorId(authorId) {
-    const posts = await this.postModel.findAll();
+  static async findAllPostsByAuthorId(authorId) {
+    const author = await userModel.findOne({ where: { id: authorId } });
+    const posts = await postModel.findAll({ where: { authorId: author.id } });
 
-    return posts.filter((post) => post.authorId === authorId);
+    return posts;
   }
 
-  findAllPosts() {
-    return this.postModel.findAll();
+  static async updatePostById(postId, postUpdateBody) {
+    const updatedPost = await postModel.update(postUpdateBody, {
+      where: { id: postId },
+    });
+
+    return updatedPost;
   }
 
-  updatePostById(postId, newPostData) {
-    return this.postModel.updateOne(postId, newPostData);
+  static async deletePostById(postId) {
+    const deletedPost = await postModel.destroy({ where: { id: postId } });
+
+    return deletedPost;
   }
 
-  deletePostById(postId) {
-    return this.postModel.deleteOne(postId);
-  }
-
-  deleteAllPosts(authorId) {
-    return this.postModel.deleteManyById(authorId);
+  static async deleteAllPosts() {
+    await postModel.destroy({ where: {} });
   }
 }
-
-const postService = new PostService();
-
-export default postService;

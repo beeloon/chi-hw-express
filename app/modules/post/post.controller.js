@@ -1,62 +1,48 @@
-import { STATUS_CODES } from 'http';
-
 import postService from './post.service';
 
 export default class PostController {
-  async listPosts(req, res) {
-    try {
-      const posts = await postService.findAllPosts();
+  static async addPost(req, res, next) {
+    const { authorId, text } = req.body;
 
-      res.json(posts);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    const createdPost = await postService.createPost(authorId, text);
+
+    return res.json(createdPost);
   }
 
-  async getPost(req, res) {
-    try {
-      const { id } = req.params;
-      const user = await postService.findPostById(id);
+  static async listPosts(req, res, next) {
+    const posts = await postService.findAllPosts();
 
-      res.json(user);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    res.json(posts);
   }
 
-  async getPostsByAuthorId(req, res) {
-    try {
-      const { authorId } = req.params;
+  static async getPostsByAuthorId(req, res, next) {
+    const { authorId } = req.params;
+    const posts = await postService.findAllPostsByAuthorId(authorId);
 
-      const postList = await postService.findAllPostsByAuthorId(authorId);
-
-      res.json(postList);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    res.end(JSON.stringify(posts));
   }
 
-  async updatePost(req, res) {
-    try {
-      const { id } = req.params;
-      const postUpdateBody = req.body;
+  static async getPost(req, res, next) {
+    const { id } = req.params;
+    const post = await postService.findPostById(id);
 
-      const updatedPost = await postService.updatePostById(id, postUpdateBody);
-
-      res.json(updatedPost);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    res.json(post);
   }
 
-  async deletePost(req, res) {
-    try {
-      const { id } = req.params;
+  static async updatePost(req, res, next) {
+    const { id } = req.params;
+    const postUpdateBody = req.body;
 
-      await postService.deletePostById(id);
-      res.end(STATUS_CODES[200]);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    const updatedPost = await postService.updatePostById(id, postUpdateBody);
+
+    res.json(updatedPost);
+  }
+
+  static async deletePost(req, res, next) {
+    const { id } = req.params;
+
+    await postService.deletePostById(id);
+
+    res.sendStatus(200);
   }
 }

@@ -1,16 +1,36 @@
-import userModel from './user.model';
+import database from '../../database';
 
-class UserService {
-  constructor() {
-    this.userModel = userModel;
+const { User: userModel, Follower: followerModel } = database.models;
+
+export default class UserService {
+  static async createUser(userData) {
+    const { username, email } = userData;
+
+    const user = await userModel.create({ username, email });
+
+    return user;
   }
 
-  createUser(userData) {
-    return this.userModel.create(userData);
+  static async createFollowerForUser(followerId, targetId) {
+    await followerModel.create({
+      followerId,
+      targetId,
+      status: 'pending',
+    });
   }
 
-  async findUserById(userId) {
-    const user = await this.userModel.findOne(userId);
+  static async deleteUserById(userId) {
+    const deletedUser = await userModel.destroy({ where: { id: userId } });
+
+    return deletedUser;
+  }
+
+  static async deleteUsers() {
+    await userModel.destroy({ where: {} });
+  }
+
+  static async findUserById(userId) {
+    const user = await userModel.findByPk(userId);
 
     if (!user) {
       throw new Error(`User with id ${id} doesn't exist.`);
@@ -19,19 +39,25 @@ class UserService {
     return user;
   }
 
-  findAllUsers() {
-    return this.userModel.findAll();
+  static async findAllUsers() {
+    const userList = await userModel.findAll();
+
+    return userList;
   }
 
-  updateUserById(userId, newUserData) {
-    return this.userModel.updateOne(userId, newUserData);
+  static async getFollowersByUserId(userId) {
+    const followers = await followerModel.findAll({
+      where: { targetId: userId },
+    });
+
+    return followers;
   }
 
-  deleteUserById(userId) {
-    return this.userModel.deleteOne(userId);
+  static async updateUserById(userId, userUpdateBody) {
+    const updatedUser = await userModel.update(userUpdateBody, {
+      where: { id: userId },
+    });
+
+    return updatedUser;
   }
 }
-
-const userService = new UserService();
-
-export default userService;

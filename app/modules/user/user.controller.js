@@ -1,77 +1,63 @@
-import { STATUS_CODES } from 'http';
-
 import userService from './user.service';
-import postService from '../post/post.service';
 
 export default class UserController {
-  async signupUser(req, res) {
-    try {
-      const user = req.body;
-
-      await userService.createUser(user);
-
-      res.end(STATUS_CODES[201]);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+  static async signupUser(req, res, next) {
+    res.json(await userService.createUser(req.body));
   }
 
-  async getUser(req, res) {
-    try {
-      const { id } = req.params;
-      const user = await userService.findUserById(id);
+  static async getUser(req, res, next) {
+    const { id } = req.params;
 
-      res.json(user);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    const user = await userService.findUserById(id);
+
+    res.json(user);
   }
 
-  async listUsers(req, res) {
-    try {
-      const userList = await userService.findAllUsers();
+  static async listUsers(req, res, next) {
+    const userList = await userService.findAllUsers();
 
-      res.json(userList);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    res.json(userList);
   }
 
-  async updateUser(req, res) {
-    try {
-      const { id } = req.params;
-      const userUpdateBody = req.body;
+  static async updateUser(req, res, next) {
+    const { id } = req.params;
+    const userUpdateBody = req.body;
 
-      const updatedUser = await userService.updateUserById(id, userUpdateBody);
+    const updatedUser = await userService.updateUserById(id, userUpdateBody);
 
-      res.json(updatedUser);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    res.json(updatedUser);
   }
 
-  async deleteUser(req, res) {
-    try {
-      const { id } = req.params;
+  static async deleteUser(req, res, next) {
+    const { id } = req.params;
 
-      await userService.deleteUserById(id);
-      await postService.deleteAllPosts(id);
-      res.end(STATUS_CODES[200]);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    await userService.deleteUserById(id);
+
+    res.sendStatus(200);
   }
 
-  async addNewPost(req, res) {
-    try {
-      const authorId = req.params.id;
-      const post = req.body;
+  static async deleteAllUsers(req, res, next) {
+    const { id } = req.params;
 
-      await postService.createPost({ authorId, ...post });
+    await userService.deleteUsers(id);
 
-      res.end(STATUS_CODES[201]);
-    } catch (err) {
-      res.end(STATUS_CODES[404]);
-    }
+    res.sendStatus(200);
+  }
+
+  static async getUserFollowers(req, res, next) {
+    const { id: userId } = req.params;
+
+    const followers = await userService.getFollowersByUserId(userId);
+
+    res.json(followers);
+  }
+
+  static async addFollower(req, res, next) {
+    const { id: followerId } = req.params;
+    const { targetId } = req.body;
+
+    await userService.createFollowerForUser(followerId, targetId);
+
+    res.sendStatus(200);
   }
 }
