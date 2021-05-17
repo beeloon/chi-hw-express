@@ -8,9 +8,9 @@ const {
 
 export default class UserService {
   static async createUser(userData) {
-    const { username, email } = userData;
+    const { username, password, email } = userData;
 
-    const user = await userModel.create({ username, email });
+    const user = await userModel.create({ username, password, email });
 
     return user;
   }

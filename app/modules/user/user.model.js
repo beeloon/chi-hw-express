@@ -13,6 +13,10 @@ export default class UserModel extends SequelizeModule.Model {
           type: SequelizeModule.STRING,
           allowNull: false,
         },
+        password: {
+          type: SequelizeModule.STRING,
+          allowNull: false,
+        },
         email: {
           type: SequelizeModule.STRING,
           allowNull: false,
