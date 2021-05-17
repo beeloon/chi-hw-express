@@ -1,6 +1,6 @@
 const path = require('path');
 
 module.exports = {
-  config: path.resolve(__dirname, 'app', 'database', 'config', 'default.cjs'),
+  config: path.resolve(__dirname, 'app', 'database', 'config', 'default.json'),
   'migrations-path': path.resolve(__dirname, 'app', 'database', 'migrations'),
 };
