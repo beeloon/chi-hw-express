@@ -1,11 +1,10 @@
 import express from 'express';
 
-import config from 'config';
-import { initializeDB } from './utils';
+import database from './database';
 import { createRouter } from './routes';
-import { requestLogger } from './middleware';
+import { requestLogger } from './middlewares';
 
-const PORT = config.get('serverPort');
+const PORT = process.env.PORT;
 const app = express();
 
 app.use(requestLogger);
@@ -13,10 +12,8 @@ app.use(express.json());
 
 createRouter(app);
 
-const startServer = async () => {
-  await initializeDB();
+app.listen(PORT, async () => {
+  await database.sequelize.authenticate();
 
-  app.listen(PORT, console.log(`Server running at http://localhost:${PORT}`));
-};
-
-startServer();
+  console.log(`Server running at http://localhost:${PORT}`);
+});
