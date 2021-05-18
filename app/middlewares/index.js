@@ -4,3 +4,11 @@ export const requestLogger = (req, res, next) => {
   console.log(`${method} ${url}`);
   next();
 };
+
+export const errorHandler = (err, req, res, next) => {
+  const { status, message } = err;
+
+  res.status(status).send(message);
+  // res.sendStatus(status);
+  // res.json(message);
+};
