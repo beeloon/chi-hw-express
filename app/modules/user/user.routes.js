@@ -4,6 +4,7 @@ import { createValidator } from 'express-joi-validation';
 
 import userController from './user.controller';
 import userSchema from './user.schema';
+import followerSchema from '../follower/follower.schema';
 
 const validator = createValidator();
 
@@ -19,7 +20,12 @@ export const createUserRoutes = (router) => {
   userRouter.delete('/:id', userController.deleteUser);
 
   userRouter.get('/:id/followers', userController.getUserFollowers);
-  userRouter.post('/:id/followers', userController.addFollower);
+  userRouter.post(
+    '/:id/followers',
+    validator.params(followerSchema.params),
+    validator.body(followerSchema.body),
+    userController.addFollower
+  );
 
   userRouter.get('/:id/posts', UserController.listUserPosts);
 

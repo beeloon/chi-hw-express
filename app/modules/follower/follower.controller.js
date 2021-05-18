@@ -9,5 +9,7 @@ export default class PostController {
 
   static async deleteAllFollowers(req, res) {
     await followerService.deleteFollowers();
+
+    res.sendStatus(200);
   }
 }
