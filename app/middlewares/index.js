@@ -9,6 +9,4 @@ export const errorHandler = (err, req, res, next) => {
   const { status, message } = err;
 
   res.status(status).send(message);
-  // res.sendStatus(status);
-  // res.json(message);
 };

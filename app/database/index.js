@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
   {
     host: config.get('development.host'),
     dialect: config.get('development.dialect'),
-    // logging: false,
+    logging: false,
   }
 );
 
