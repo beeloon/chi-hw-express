@@ -1,5 +1,4 @@
 import express from 'express';
-import UserController from './user.controller';
 import { createValidator } from 'express-joi-validation';
 
 import userController from './user.controller';
@@ -27,7 +26,7 @@ export const createUserRoutes = (router) => {
     userController.addFollower
   );
 
-  userRouter.get('/:id/posts', UserController.listUserPosts);
+  userRouter.get('/:id/posts', userController.listUserPosts);
 
   router.use('/users', userRouter);
 };
