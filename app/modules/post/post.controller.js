@@ -2,46 +2,70 @@ import postService from './post.service';
 
 export default class PostController {
   static async addPost(req, res, next) {
-    const { authorId, text } = req.body;
+    try {
+      const { authorId, text } = req.body;
 
-    const createdPost = await postService.createPost(authorId, text);
+      const createdPost = await postService.createPost(authorId, text);
 
-    return res.json(createdPost);
+      return res.json(createdPost);
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async listPosts(req, res, next) {
-    const posts = await postService.findAllPosts();
+    try {
+      const posts = await postService.findAllPosts();
 
-    res.json(posts);
+      res.json(posts);
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async getPost(req, res, next) {
-    const { id } = req.params;
-    const post = await postService.findPostById(id);
+    try {
+      const { id } = req.params;
+      const post = await postService.findPostById(id);
 
-    res.json(post);
+      res.json(post);
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async updatePost(req, res, next) {
-    const { id } = req.params;
-    const postUpdateBody = req.body;
+    try {
+      const { id } = req.params;
+      const postUpdateBody = req.body;
 
-    const updatedPost = await postService.updatePostById(id, postUpdateBody);
+      const updatedPost = await postService.updatePostById(id, postUpdateBody);
 
-    res.json(updatedPost);
+      res.json(updatedPost);
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async deletePost(req, res, next) {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    await postService.deletePostById(id);
+      await postService.deletePostById(id);
 
-    res.sendStatus(200);
+      res.sendStatus(200);
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async deleteAllPosts(req, res, next) {
-    await postService.deletePosts();
+    try {
+      await postService.deletePosts();
 
-    res.sendStatus(200);
+      res.sendStatus(200);
+    } catch (err) {
+      next(err);
+    }
   }
 }
