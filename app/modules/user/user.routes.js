@@ -3,6 +3,7 @@ import { createValidator } from 'express-joi-validation';
 
 import userController from './user.controller';
 import userSchema from './user.schema';
+
 import followerSchema from '../follower/follower.schema';
 
 const validator = createValidator();
