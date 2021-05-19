@@ -41,18 +41,18 @@ export default class UserService {
     }
   }
 
-  static async deleteUserById(userId) {
+  static async deleteUsers() {
     try {
-      await this.findUserById(userId);
-      await userModel.destroy({ where: { id: userId } });
+      await userModel.destroy({ where: {} });
     } catch (err) {
       throw new RequestError(err, 500);
     }
   }
 
-  static async deleteUsers() {
+  static async deleteUserById(userId) {
     try {
-      await userModel.destroy({ where: {} });
+      await this.findUserById(userId);
+      await userModel.destroy({ where: { id: userId } });
     } catch (err) {
       throw new RequestError(err, 500);
     }
