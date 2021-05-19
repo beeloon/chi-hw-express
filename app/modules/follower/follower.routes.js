@@ -2,7 +2,7 @@ import express from 'express';
 
 import followerController from './follower.controller';
 
-export const createFollowerRoutes = (router) => {
+const createFollowerRoutes = (router) => {
   const followerRouter = express.Router();
 
   followerRouter.get('/', followerController.listAllFollowers);
@@ -10,3 +10,5 @@ export const createFollowerRoutes = (router) => {
 
   router.use('/followers', followerRouter);
 };
+
+export default createFollowerRoutes;

@@ -6,7 +6,7 @@ import postSchema from './post.schema';
 
 const validator = createValidator();
 
-export const createPostRoutes = (router) => {
+const createPostRoutes = (router) => {
   const postRouter = express.Router();
 
   postRouter.get('/', postController.listPosts);
@@ -19,3 +19,5 @@ export const createPostRoutes = (router) => {
 
   router.use('/posts', postRouter);
 };
+
+export default createPostRoutes;

@@ -1,7 +1,7 @@
 import express from 'express';
 
 import database from './database';
-import { createRouter } from './routes';
+import createRouter from './routes';
 
 const PORT = process.env.PORT;
 const app = express();

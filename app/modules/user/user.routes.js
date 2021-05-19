@@ -8,7 +8,7 @@ import followerSchema from '../follower/follower.schema';
 
 const validator = createValidator();
 
-export const createUserRoutes = (router) => {
+const createUserRoutes = (router) => {
   const userRouter = express.Router();
 
   userRouter.get('/', userController.listUsers);
@@ -31,3 +31,5 @@ export const createUserRoutes = (router) => {
 
   router.use('/users', userRouter);
 };
+
+export default createUserRoutes;

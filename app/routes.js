@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { createUserRoutes } from './modules/user/user.routes';
-import { createPostRoutes } from './modules/post/post.routes';
-import { createFollowerRoutes } from './modules/follower/follower.routes';
+import createUserRoutes from './modules/user/user.routes';
+import createPostRoutes from './modules/post/post.routes';
+import createFollowerRoutes from './modules/follower/follower.routes';
 
-export const createRouter = (app) => {
+const createRouter = (app) => {
   const router = express.Router();
 
   createUserRoutes(router);
@@ -12,4 +12,7 @@ export const createRouter = (app) => {
   createFollowerRoutes(router);
 
   app.use('/api', router);
+  app.all('*', (req, res) => res.sendStatus(404));
 };
+
+export default createRouter;
