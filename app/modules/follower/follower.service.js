@@ -1,15 +1,25 @@
 import database from '../../database';
 
+import RequestError from '../../lib/RequestError';
+
 const { Follower: followerModel } = database.models;
 
 export default class FollowerService {
   static async findAllFollowers() {
-    const followers = await followerModel.findAll();
+    try {
+      const followers = await followerModel.findAll();
 
-    return followers;
+      return followers;
+    } catch (err) {
+      throw new RequestError(err, 500);
+    }
   }
 
   static async deleteFollowers() {
-    await followerModel.destroy({ where: {} });
+    try {
+      await followerModel.destroy({ where: {} });
+    } catch (err) {
+      throw new RequestError(err, 500);
+    }
   }
 }
