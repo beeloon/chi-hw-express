@@ -24,3 +24,6 @@
 await postService.findOne(...)
 await postService.destroy({})
 ```
+
+## Build image:
+docker build -t express_api_server
