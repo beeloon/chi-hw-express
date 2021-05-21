@@ -1,26 +1,44 @@
 version: "3.7"
 
 services:
-  app:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile
-    image: node:14.17.0
+    container_name: api-server
+    networks:
+      mysql-port:
+        ipv4_address: 172.15.0.5
     ports:
       - 8000:8000
-    volumes:
-      - .:/code
-      - '/code/node_modules'
     depends_on:
-      - mysql_server
+      - mysql
 
-  mysql_server:
+  mysql:
     image: mysql:8.0
     environment:
       MYSQL_DB: express_api_server
       MYSQL_HOST: localhost
       MYSQL_PASSWORD: 1q2w3e!Q
       MYSQL_ROOT_PASSWORD: 1q2w3e!Q
+    networks:
+      mysql-port:
+        ipv4_address: 172.15.0.5
+    ports:
+      - 3307:3306
+    # volumes:
+    #   - .:/code
+    restart: always
 
+volumes:
+  mysql:
+
+networks:
+  mysql-port:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.15.0.0/16
     
       
