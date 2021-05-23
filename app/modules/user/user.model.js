@@ -1,4 +1,5 @@
 import SequelizeModule from 'sequelize';
+import bcrypt from 'bcrypt';
 
 export default class UserModel extends SequelizeModule.Model {
   static init(sequelize) {
@@ -16,6 +17,10 @@ export default class UserModel extends SequelizeModule.Model {
         password: {
           type: SequelizeModule.STRING,
           allowNull: false,
+          set(value) {
+            const hash = bcrypt.hashSync(value, 10);
+            this.setDataValue('password', hash);
+          },
         },
         email: {
           type: SequelizeModule.STRING,
