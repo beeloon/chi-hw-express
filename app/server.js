@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.listen(PORT, async () => {
   await database.sequelize.authenticate();
+  await database.connectMongoDB();
 
   console.log(`Server running at http://localhost:${PORT}`);
 });
