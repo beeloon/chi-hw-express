@@ -1,15 +1,23 @@
 import express from 'express';
+import passport from 'passport';
+import usePassportStrategies from './passport-strategies';
 
 import authController from './auth.controller';
+
+usePassportStrategies(passport);
 
 const createAuthRoutes = (router) => {
   const authRouter = express.Router();
 
-  authRouter.get('/login', authController.login);
-  authRouter.get('/signup', authController.signup);
-  authRouter.get('/signout', authController.signout);
+  authRouter.post(
+    '/',
+    passport.authenticate('local', { failureRedirect: '/login' }),
+    (req, res) => {
+      res.redirect('/');
+    }
+  );
 
-  router.use('/auth', authRouter);
+  router.use('/login', authRouter);
 };
 
 export default createAuthRoutes;

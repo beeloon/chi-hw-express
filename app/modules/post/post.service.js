@@ -3,7 +3,7 @@ import database from '../../database';
 import RequestError from '../../lib/RequestError';
 import userService from '../user/user.service';
 
-const { Post: postModel, User: userModel } = database.models;
+const { Post: postModel } = database.models;
 
 export default class PostService {
   static async createPost(authorId, text) {
