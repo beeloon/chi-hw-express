@@ -1,6 +1,6 @@
 import database from '../../database';
 
-import RequestError from '../../lib/RequestError';
+import ApplicationError from '../../lib/ApplicationError';
 
 const {
   User: userModel,
@@ -25,7 +25,7 @@ export default class UserService {
         status: 'pending',
       });
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -37,7 +37,7 @@ export default class UserService {
 
       return user;
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -45,7 +45,7 @@ export default class UserService {
     try {
       await userModel.destroy({ where: {} });
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -54,7 +54,7 @@ export default class UserService {
       await this.findUserById(userId);
       await userModel.destroy({ where: { id: userId } });
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -64,7 +64,7 @@ export default class UserService {
 
       return userList;
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -78,7 +78,21 @@ export default class UserService {
 
       return user;
     } catch (err) {
-      throw new RequestError(err, 404);
+      throw new ApplicationError(err, 404);
+    }
+  }
+
+  static async findUserByEmail(userEmail) {
+    try {
+      const user = await userModel.findOne({ where: { email: userEmail } });
+
+      if (user === null) {
+        throw new Error(`User with id ${userId} doesn't exist.`);
+      }
+
+      return user;
+    } catch (err) {
+      throw new ApplicationError(err, 404);
     }
   }
 
@@ -89,7 +103,7 @@ export default class UserService {
 
       return userPostList;
     } catch (err) {
-      throw new RequestError(err, 404);
+      throw new ApplicationError(err, 404);
     }
   }
 
@@ -102,7 +116,7 @@ export default class UserService {
 
       return followers;
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -115,7 +129,7 @@ export default class UserService {
 
       return updatedUser;
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 }

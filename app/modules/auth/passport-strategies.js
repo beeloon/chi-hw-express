@@ -1,25 +1,38 @@
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcrypt';
 
-import database from '../../database';
-
-const { User: userModel } = database.models;
+import userService from '../user/user.service';
 
 const verifyPassword = async (requestPassword, userPassword) => {
   return await bcrypt.compare(requestPassword, userPassword);
 };
 
 export default (passport) => {
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((userId, done) => {
+    try {
+      const user = userService.findUserById(userId);
+
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  });
+
   passport.use(
-    new LocalStrategy(async (username, password, done) => {
+    new LocalStrategy(async (email, password, done) => {
       try {
-        const user = await userModel.findOne({ where: { username } });
+        const user = await userService.findUserByEmail({ where: { email } });
 
         if (user === null) {
           return done(null, false);
         }
 
-        if (await verifyPassword(password, user.password)) {
+        const isPasswordValid = await verifyPassword(password, user.password);
+        if (!isPasswordValid) {
           return done(null, false);
         }
 

@@ -1,4 +1,4 @@
-export default class RequestError extends Error {
+export default class ApplicationError extends Error {
   constructor(message, status) {
     super(message);
 

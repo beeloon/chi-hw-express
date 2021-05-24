@@ -10,14 +10,14 @@ const createAuthRoutes = (router) => {
   const authRouter = express.Router();
 
   authRouter.post(
-    '/',
-    passport.authenticate('local', { failureRedirect: '/login' }),
+    '/login',
+    passport.authenticate('local', { failureRedirect: '/api/auth/login' }),
     (req, res) => {
-      res.redirect('/');
+      res.redirect('/api/users');
     }
   );
 
-  router.use('/login', authRouter);
+  router.use('/auth', authRouter);
 };
 
 export default createAuthRoutes;

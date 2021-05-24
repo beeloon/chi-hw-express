@@ -2,6 +2,7 @@ import express from 'express';
 
 import createUserRoutes from './modules/user/user.routes';
 import createPostRoutes from './modules/post/post.routes';
+import createAuthRoutes from './modules/auth/auth.routes';
 import createFollowerRoutes from './modules/follower/follower.routes';
 
 const createRouter = (app) => {
@@ -9,6 +10,7 @@ const createRouter = (app) => {
 
   createUserRoutes(router);
   createPostRoutes(router);
+  createAuthRoutes(router);
   createFollowerRoutes(router);
 
   app.use('/api', router);

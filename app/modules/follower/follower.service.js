@@ -1,6 +1,6 @@
 import database from '../../database';
 
-import RequestError from '../../lib/RequestError';
+import ApplicationError from '../../lib/ApplicationError';
 
 const { Follower: followerModel } = database.models;
 
@@ -11,7 +11,7 @@ export default class FollowerService {
 
       return followers;
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -19,7 +19,7 @@ export default class FollowerService {
     try {
       await followerModel.destroy({ where: {} });
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 }

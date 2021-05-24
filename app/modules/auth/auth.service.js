@@ -1,10 +1,10 @@
-import RequestError from '../../lib/RequestError';
+import ApplicationError from '../../lib/ApplicationError';
 
 export default class AuthService {
   static async authenticate(username, password) {
     try {
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 }

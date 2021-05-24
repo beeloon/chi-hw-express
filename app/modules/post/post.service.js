@@ -1,6 +1,6 @@
 import database from '../../database';
 
-import RequestError from '../../lib/RequestError';
+import ApplicationError from '../../lib/ApplicationError';
 import userService from '../user/user.service';
 
 const { Post: postModel } = database.models;
@@ -13,7 +13,7 @@ export default class PostService {
 
       return post;
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -22,7 +22,7 @@ export default class PostService {
       await this.findPostById(postId);
       await postModel.destroy({ where: { id: postId } });
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -30,7 +30,7 @@ export default class PostService {
     try {
       await postModel.destroy({ where: {} });
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -40,7 +40,7 @@ export default class PostService {
 
       return postList;
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 
@@ -54,7 +54,7 @@ export default class PostService {
 
       return post;
     } catch (err) {
-      throw new RequestError(err, 404);
+      throw new ApplicationError(err, 404);
     }
   }
 
@@ -67,7 +67,7 @@ export default class PostService {
 
       return updatedPost;
     } catch (err) {
-      throw new RequestError(err, 500);
+      throw new ApplicationError(err, 500);
     }
   }
 }
