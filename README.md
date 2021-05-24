@@ -31,6 +31,21 @@ docker build -t express_api_server
 ## Ports
 localhost: 127.0.0.1
 mysql_docker_host: 172.15.0.8
-<!-- 
-volumes:
-   - .:. -->
+
+<!-- user on port 172.15.0.8 -->
+<!-- CREATE USER 'ulquiorra'@'172.15.0.8:3307' IDENTIFIED BY '1q2w3e!Q'; -->
+
+<!-- old env
+SQL_DATABASE=express_api_server
+SQL_HOST=localhost
+SQL_PASSWORD=1q2w3e!Q
+SQL_USER=root
+SQL_DIALECT=mysql -->
+
+
+<!-- new env
+SQL_DATABASE=express_api_server
+SQL_HOST=localhost
+SQL_PASSWORD=1q2w3e!Q
+SQL_USER=ulquiorra
+SQL_DIALECT=mysql -->

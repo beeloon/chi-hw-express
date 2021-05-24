@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "root",
+    "username": "ulquiorra",
     "password": "1q2w3e!Q",
     "database": "express_api_server",
     "host": "172.15.0.8:3307",
