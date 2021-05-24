@@ -5,7 +5,7 @@ import errorHandler from 'errorhandler';
 import database from './database';
 import createRouter from './routes';
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 app.use(logger('dev'));

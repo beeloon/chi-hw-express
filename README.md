@@ -27,3 +27,10 @@ await postService.destroy({})
 
 ## Build image:
 docker build -t express_api_server
+
+## Ports
+localhost: 127.0.0.1
+mysql_docker_host: 172.15.0.8
+<!-- 
+volumes:
+   - .:. -->
