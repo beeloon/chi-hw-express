@@ -1,12 +1,14 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
+
+const { Schema, model } = mongoose;
 
 const Token = new Schema({
   value: {
     type: String,
     required: true,
   },
-  user: {
-    type: Schema.Types.ObjectId,
+  userId: {
+    type: String,
     required: true,
   },
 });

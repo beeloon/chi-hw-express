@@ -8,9 +8,6 @@ import userService from '../user/user.service';
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_ACCESS_TOKEN_SECRET,
-  passReqToCallback: true,
-  // issuer: 'accounts.examplesoft.com',
-  // audience: 'yoursite.net',
 };
 
 export default (passport) => {
@@ -29,25 +26,41 @@ export default (passport) => {
   });
 
   passport.use(
-    new LocalStrategy(async (email, password, done) => {
-      try {
-        const user = await userService.findUserByEmail({ where: { email } });
+    new LocalStrategy(
+      { usernameField: 'email' },
+      async (email, password, done) => {
+        try {
+          const user = await userService.findUserByEmail(email);
 
-        if (user === null) {
-          return done(null, false);
+          if (!user) {
+            return done(null, false);
+          }
+
+          const isPasswordValid = await verifyPassword(password, user.password);
+          if (!isPasswordValid) {
+            return done(null, false);
+          }
+
+          return done(null, user);
+        } catch (err) {
+          return done(err);
         }
+      }
+    )
+  );
 
-        const isPasswordValid = await verifyPassword(password, user.password);
-        if (!isPasswordValid) {
+  passport.use(
+    new JwtStrategy(jwtOptions, async (payload, done) => {
+      try {
+        const user = await userService.findUserById(payload.id);
+        if (!user) {
           return done(null, false);
         }
 
         return done(null, user);
       } catch (err) {
-        return done(err);
+        return done(err, false);
       }
     })
   );
-
-  passport.use(new JwtStrategy(jwtOptions, (payload, done) => {}));
 };

@@ -32,9 +32,9 @@ const createAuthRoutes = (router) => {
     authController.refresh
   );
 
-  authRouter.post('/signup', authController.signup);
+  authRouter.post('/signup', validator.body(userSchema), authController.signup);
 
-  router.use('/auth', validator.body(userSchema), authRouter);
+  router.use('/', authRouter);
 };
 
 export default createAuthRoutes;

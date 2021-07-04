@@ -29,11 +29,9 @@ class UserService {
     }
   }
 
-  async createUser(userData) {
+  async createUser(createUserDto) {
     try {
-      const { username, password, email } = userData;
-
-      const user = await userModel.create({ username, password, email });
+      const user = await userModel.create(createUserDto);
 
       return user;
     } catch (err) {

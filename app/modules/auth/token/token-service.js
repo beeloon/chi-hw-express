@@ -1,42 +1,23 @@
+import jwt from 'jsonwebtoken';
+
+import refreshTokenModel from './token.model';
+
 class TokenService {
-  async generateTokens(payload) {
-    const accessToken = this.jwtService.sign(payload, {
-      secret: this.configService.get('tokens.access.secret'),
-      expiresIn: this.configService.get('tokens.access.expiresIn'),
-    });
-
-    const refreshToken = this.jwtService.sign(payload, {
-      secret: this.configService.get('tokens.refresh.secret'),
-      expiresIn: this.configService.get('tokens.refresh.expiresIn'),
-    });
-
-    await this.save(payload.id, refreshToken);
-
-    return { accessToken, refreshToken };
+  generateToken(payload, secret, expiresIn) {
+    return jwt.sign(payload, secret, { expiresIn });
   }
 
-  async find(options) {
+  async find(option) {
     try {
-      return await this.refreshTokenRepository.findOne(options);
+      return await refreshTokenModel.findOne(option);
     } catch (err) {
       throw new ConflictException(err.message);
     }
   }
 
-  async save(userId, refreshToken) {
-    const tokenData = await this.find({ user_id: userId });
-
-    if (tokenData) {
-      return tokenData;
-    }
-
+  async create(userId, refreshToken) {
     try {
-      const token = await this.refreshTokenRepository.save({
-        user_id: userId,
-        value: refreshToken,
-      });
-
-      return token;
+      return await refreshTokenModel.create({ userId, value: refreshToken });
     } catch (err) {
       throw new ConflictException(err.message);
     }
@@ -44,9 +25,7 @@ class TokenService {
 
   async remove(refreshToken) {
     try {
-      const {
-        affected: numberOfDeletedRows,
-      } = await this.refreshTokenRepository.delete({
+      const { affected: numberOfDeletedRows } = await refreshTokenModel.delete({
         value: refreshToken,
       });
 
@@ -58,8 +37,8 @@ class TokenService {
 
   async validate(token) {
     try {
-      const refreshSecret = this.configService.get('tokens.refresh.secret');
-      const userInfo = await this.jwtService.verifyAsync(token, {
+      const refreshSecret = process.env.JWT_REFRESH_TOKEN_SECRET;
+      const userInfo = await jwt.verifyAsync(token, {
         secret: refreshSecret,
       });
 
@@ -70,5 +49,4 @@ class TokenService {
   }
 }
 
-const tokenService = new TokenService();
-export default tokenService;
+export default new TokenService();

@@ -1,13 +1,17 @@
 import authService from './auth.service';
 import userService from '../user/user.service';
+
 import { setCookie } from '../../utils';
 
 import { BadRequest } from '../../errors';
 
 class AuthController {
   async login(req, res) {
-    console.log(req.user);
-    // const tokens = await authService.login(
+    const tokens = await authService.login(req.user);
+
+    setCookie(res, tokens.refreshToken);
+
+    res.json(tokens);
   }
 
   async logout(req, res) {
@@ -25,9 +29,11 @@ class AuthController {
   }
 
   async signup(req, res) {
-    const user = await userService.createUser(req.body);
-    setCookie(res, 'RANDOM TOKEN');
-    res.json(user);
+    const tokens = await authService.signup(req.body);
+
+    setCookie(res, tokens.refreshToken);
+
+    res.json(tokens);
   }
 }
 
