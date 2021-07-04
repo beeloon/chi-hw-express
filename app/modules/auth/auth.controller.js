@@ -6,10 +6,8 @@ import { BadRequest } from '../../errors';
 
 class AuthController {
   async login(req, res) {
-    try {
-    } catch (err) {
-      throw new BadRequest(err, 500);
-    }
+    console.log(req.user);
+    // const tokens = await authService.login(
   }
 
   async logout(req, res) {
