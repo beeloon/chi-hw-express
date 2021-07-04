@@ -1,3 +1,4 @@
+import config from 'config';
 import jwt from 'jsonwebtoken';
 
 import refreshTokenModel from './token.model';
@@ -37,7 +38,7 @@ class TokenService {
 
   async validate(token) {
     try {
-      const refreshSecret = process.env.JWT_REFRESH_TOKEN_SECRET;
+      const refreshSecret = config.get('token.refresh.secret');
       const userInfo = await jwt.verifyAsync(token, {
         secret: refreshSecret,
       });

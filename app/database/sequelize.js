@@ -4,14 +4,14 @@ import config from 'config';
 import UserModel from '../modules/user/user.model';
 import PostModel from '../modules/post/post.model';
 import FollowerModel from '../modules/follower/follower.model';
-
+console.log(config);
 const sequelize = new Sequelize(
-  config.get('development.database'),
-  config.get('development.username'),
-  config.get('development.password'),
+  config.get('sql.database'),
+  config.get('sql.username'),
+  config.get('sql.password'),
   {
-    host: config.get('development.host'),
-    dialect: config.get('development.dialect'),
+    host: config.get('sql.host'),
+    dialect: config.get('sql.dialect'),
     logging: false,
   }
 );

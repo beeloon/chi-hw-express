@@ -1,3 +1,4 @@
+import config from 'config';
 import express from 'express';
 import logger from 'morgan';
 import errorHandler from 'errorhandler';
@@ -7,7 +8,7 @@ import cookieParser from 'cookie-parser';
 import database from './database';
 import createRouter from './routes';
 
-const PORT = process.env.PORT || 8000;
+const PORT = parseInt(config.get('port')) || 8000;
 const app = express();
 
 app.use(logger('dev'));
@@ -19,7 +20,7 @@ app.use(passport.session());
 
 createRouter(app);
 
-if (process.env.NODE_ENV === 'development') {
+if (config.get('environment') === 'development') {
   app.use(errorHandler());
 }
 

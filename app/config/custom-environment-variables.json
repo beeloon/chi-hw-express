@@ -1,0 +1,25 @@
+{
+    "port": "PORT",
+    "environment": "NODE_ENV",
+    "sql": {
+        "dialect": "SQL_DIALECT",
+        "host": "SQL_HOST",
+        "port": "SQL_PORT",
+        "username": "SQL_USERNAME",
+        "password": "SQL_PASSWORD",
+        "database": "SQL_DATABASE"
+    },
+    "mongo": {
+        "uri": "MONGO_URI"
+    },
+    "token": {
+        "access": {
+            "secret": "JWT_ACCESS_TOKEN_SECRET",
+            "expiresIn": "JWT_ACCESS_TOKEN_EXPIRATION_TIME"
+        },
+        "refresh": {
+            "secret": "JWT_REFRESH_TOKEN_SECRET",
+            "expiresIn": "JWT_REFRESH_TOKEN_EXPIRATION_TIME"
+        }
+    }
+}

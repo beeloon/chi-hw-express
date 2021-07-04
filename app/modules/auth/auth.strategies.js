@@ -1,3 +1,4 @@
+import config from 'config';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
@@ -7,7 +8,7 @@ import userService from '../user/user.service';
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_ACCESS_TOKEN_SECRET,
+  secretOrKey: config.get('token.access.secret'),
 };
 
 export default (passport) => {

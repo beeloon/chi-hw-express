@@ -1,3 +1,5 @@
+import config from 'config';
+
 import { BadRequest } from '../../errors';
 import userService from '../user/user.service';
 
@@ -9,8 +11,8 @@ class AuthService {
 
     const accessToken = tokenService.generateToken(
       payload,
-      process.env.JWT_ACCESS_TOKEN_SECRET,
-      process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME
+      config.get('token.access.secret'),
+      config.get('token.access.expiresIn')
     );
 
     let refreshToken;
@@ -20,8 +22,8 @@ class AuthService {
     } else {
       refreshToken = tokenService.generateToken(
         payload,
-        process.env.JWT_REFRESH_TOKEN_SECRET,
-        process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME
+        config.get('token.refresh.secret'),
+        config.get('token.refresh.expiresIn')
       );
 
       tokenService.create(payload.id, refreshToken);
