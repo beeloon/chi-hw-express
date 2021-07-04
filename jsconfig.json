@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@database/*": [
+                "app/database/*"
+            ],
+            "@errors/*": [
+                "arr/errors/*"
+            ]
+        }
+    }
+}

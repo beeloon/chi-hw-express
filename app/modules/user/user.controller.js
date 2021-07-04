@@ -1,7 +1,7 @@
 import userService from './user.service';
 
-export default class UserController {
-  static async signupUser(req, res, next) {
+class UserController {
+  async signupUser(req, res, next) {
     try {
       const user = await userService.createUser(req.body);
 
@@ -11,7 +11,7 @@ export default class UserController {
     }
   }
 
-  static async getUser(req, res, next) {
+  async getUser(req, res, next) {
     try {
       const { id } = req.params;
 
@@ -23,7 +23,7 @@ export default class UserController {
     }
   }
 
-  static async listUsers(req, res, next) {
+  async listUsers(req, res, next) {
     try {
       const userList = await userService.findAllUsers();
 
@@ -33,7 +33,7 @@ export default class UserController {
     }
   }
 
-  static async listUserPosts(req, res, next) {
+  async listUserPosts(req, res, next) {
     try {
       const { id } = req.params;
 
@@ -45,7 +45,7 @@ export default class UserController {
     }
   }
 
-  static async updateUser(req, res, next) {
+  async updateUser(req, res, next) {
     try {
       const { id } = req.params;
       const userUpdateBody = req.body;
@@ -58,7 +58,7 @@ export default class UserController {
     }
   }
 
-  static async deleteUser(req, res, next) {
+  async deleteUser(req, res, next) {
     try {
       const { id } = req.params;
 
@@ -70,7 +70,7 @@ export default class UserController {
     }
   }
 
-  static async deleteAllUsers(req, res, next) {
+  async deleteAllUsers(req, res, next) {
     try {
       await userService.deleteUsers();
 
@@ -80,7 +80,7 @@ export default class UserController {
     }
   }
 
-  static async getUserFollowers(req, res, next) {
+  async getUserFollowers(req, res, next) {
     try {
       const { id: userId } = req.params;
 
@@ -92,7 +92,7 @@ export default class UserController {
     }
   }
 
-  static async addFollower(req, res, next) {
+  async addFollower(req, res, next) {
     try {
       const { id: followerId } = req.params;
       const { targetId } = req.body;
@@ -105,3 +105,5 @@ export default class UserController {
     }
   }
 }
+
+export default new UserController();

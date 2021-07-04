@@ -1,6 +1,6 @@
 import database from '../../database';
 
-import ApplicationError from '../../lib/ApplicationError';
+import { BadRequest, ConflictError } from '../../errors';
 
 const {
   User: userModel,
@@ -8,8 +8,8 @@ const {
   Post: postModel,
 } = database.models;
 
-export default class UserService {
-  static async addFollowerForUser(followerId, targetId) {
+class UserService {
+  async addFollowerForUser(followerId, targetId) {
     try {
       const follower = await followerModel.findAll({
         where: { followerId, targetId },
@@ -25,11 +25,11 @@ export default class UserService {
         status: 'pending',
       });
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 
-  static async createUser(userData) {
+  async createUser(userData) {
     try {
       const { username, password, email } = userData;
 
@@ -37,38 +37,38 @@ export default class UserService {
 
       return user;
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new ConflictError(err.message);
     }
   }
 
-  static async deleteUsers() {
+  async deleteUsers() {
     try {
       await userModel.destroy({ where: {} });
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 
-  static async deleteUserById(userId) {
+  async deleteUserById(userId) {
     try {
       await this.findUserById(userId);
       await userModel.destroy({ where: { id: userId } });
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 
-  static async findAllUsers() {
+  async findAllUsers() {
     try {
       const userList = await userModel.findAll();
 
       return userList;
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 
-  static async findUserById(userId) {
+  async findUserById(userId) {
     try {
       const user = await userModel.findByPk(userId);
 
@@ -82,9 +82,11 @@ export default class UserService {
     }
   }
 
-  static async findUserByEmail(userEmail) {
+  async findUserByEmail(userEmail) {
     try {
-      const user = await userModel.findOne({ where: { email: userEmail } });
+      const user = await userModel.findOne({
+        where: { email: userEmail },
+      });
 
       if (user === null) {
         throw new Error(`User with id ${userId} doesn't exist.`);
@@ -96,10 +98,12 @@ export default class UserService {
     }
   }
 
-  static async getUserPosts(authorId) {
+  async getUserPosts(authorId) {
     try {
       const user = await this.findUserById(authorId);
-      const userPostList = postModel.findAll({ where: { authorId: user.id } });
+      const userPostList = postModel.findAll({
+        where: { authorId: user.id },
+      });
 
       return userPostList;
     } catch (err) {
@@ -107,7 +111,7 @@ export default class UserService {
     }
   }
 
-  static async getFollowersByUserId(userId) {
+  async getFollowersByUserId(userId) {
     try {
       const user = await this.findUserById(userId);
       const followers = await followerModel.findAll({
@@ -120,7 +124,7 @@ export default class UserService {
     }
   }
 
-  static async updateUserById(userId, userUpdateBody) {
+  async updateUserById(userId, userUpdateBody) {
     try {
       const user = await this.findUserById(userId);
       const updatedUser = await userModel.update(userUpdateBody, {
@@ -133,3 +137,5 @@ export default class UserService {
     }
   }
 }
+
+export default new UserService();

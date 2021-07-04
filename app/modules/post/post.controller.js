@@ -1,7 +1,7 @@
 import postService from './post.service';
 
-export default class PostController {
-  static async addPost(req, res, next) {
+class PostController {
+  async addPost(req, res, next) {
     try {
       const { authorId, text } = req.body;
 
@@ -13,7 +13,7 @@ export default class PostController {
     }
   }
 
-  static async listPosts(req, res, next) {
+  async listPosts(req, res, next) {
     try {
       const posts = await postService.findAllPosts();
 
@@ -23,7 +23,7 @@ export default class PostController {
     }
   }
 
-  static async getPost(req, res, next) {
+  async getPost(req, res, next) {
     try {
       const { id } = req.params;
       const post = await postService.findPostById(id);
@@ -34,7 +34,7 @@ export default class PostController {
     }
   }
 
-  static async updatePost(req, res, next) {
+  async updatePost(req, res, next) {
     try {
       const { id } = req.params;
       const postUpdateBody = req.body;
@@ -47,7 +47,7 @@ export default class PostController {
     }
   }
 
-  static async deletePost(req, res, next) {
+  async deletePost(req, res, next) {
     try {
       const { id } = req.params;
 
@@ -59,7 +59,7 @@ export default class PostController {
     }
   }
 
-  static async deleteAllPosts(req, res, next) {
+  async deleteAllPosts(req, res, next) {
     try {
       await postService.deletePosts();
 
@@ -69,3 +69,5 @@ export default class PostController {
     }
   }
 }
+
+export default new PostController();

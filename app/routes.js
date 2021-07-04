@@ -14,7 +14,12 @@ const createRouter = (app) => {
   createFollowerRoutes(router);
 
   app.use('/api', router);
-  app.all('*', (req, res) => res.sendStatus(404));
+  app.all('*', (req, res) =>
+    res.sendStatus(404).json({
+      status: 404,
+      message: 'Page Not Found',
+    })
+  );
 };
 
 export default createRouter;

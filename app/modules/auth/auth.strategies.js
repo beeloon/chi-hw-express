@@ -1,10 +1,16 @@
 import { Strategy as LocalStrategy } from 'passport-local';
-import bcrypt from 'bcrypt';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+
+import { verifyPassword } from '../../utils';
 
 import userService from '../user/user.service';
 
-const verifyPassword = async (requestPassword, userPassword) => {
-  return await bcrypt.compare(requestPassword, userPassword);
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_ACCESS_TOKEN_SECRET,
+  passReqToCallback: true,
+  // issuer: 'accounts.examplesoft.com',
+  // audience: 'yoursite.net',
 };
 
 export default (passport) => {
@@ -42,4 +48,6 @@ export default (passport) => {
       }
     })
   );
+
+  passport.use(new JwtStrategy(jwtOptions, (payload, done) => {}));
 };

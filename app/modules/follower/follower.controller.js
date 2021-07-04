@@ -1,7 +1,11 @@
 import followerService from './follower.service';
 
-export default class PostController {
-  static async listAllFollowers(req, res, next) {
+class FollowerController {
+  constructor() {
+    this.followerService = followerService;
+  }
+
+  async listAllFollowers(req, res, next) {
     try {
       const followerList = await followerService.findAllFollowers();
 
@@ -11,7 +15,7 @@ export default class PostController {
     }
   }
 
-  static async deleteAllFollowers(req, res, next) {
+  async deleteAllFollowers(req, res, next) {
     try {
       await followerService.deleteFollowers();
 
@@ -21,3 +25,5 @@ export default class PostController {
     }
   }
 }
+
+export default new FollowerController();

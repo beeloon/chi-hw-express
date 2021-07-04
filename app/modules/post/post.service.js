@@ -1,50 +1,51 @@
 import database from '../../database';
 
-import ApplicationError from '../../lib/ApplicationError';
 import userService from '../user/user.service';
+
+import { BadRequest } from '../../errors';
 
 const { Post: postModel } = database.models;
 
-export default class PostService {
-  static async createPost(authorId, text) {
+class PostService {
+  async createPost(authorId, text) {
     try {
       const author = await userService.findUserById(authorId);
       const post = await postModel.create({ text, authorId: author.id });
 
       return post;
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 
-  static async deletePostById(postId) {
+  async deletePostById(postId) {
     try {
       await this.findPostById(postId);
       await postModel.destroy({ where: { id: postId } });
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 
-  static async deletePosts() {
+  async deletePosts() {
     try {
       await postModel.destroy({ where: {} });
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 
-  static async findAllPosts() {
+  async findAllPosts() {
     try {
       const postList = await postModel.findAll();
 
       return postList;
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 
-  static async findPostById(postId) {
+  async findPostById(postId) {
     try {
       const post = await postModel.findByPk(postId);
 
@@ -54,11 +55,11 @@ export default class PostService {
 
       return post;
     } catch (err) {
-      throw new ApplicationError(err, 404);
+      throw new BadRequest(err, 404);
     }
   }
 
-  static async updatePostById(postId, postUpdateBody) {
+  async updatePostById(postId, postUpdateBody) {
     try {
       const post = await this.findPostById(postId);
       const updatedPost = await postModel.update(postUpdateBody, {
@@ -67,7 +68,9 @@ export default class PostService {
 
       return updatedPost;
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new BadRequest(err, 500);
     }
   }
 }
+
+export default new PostService();

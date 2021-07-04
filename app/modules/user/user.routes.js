@@ -2,7 +2,6 @@ import express from 'express';
 import { createValidator } from 'express-joi-validation';
 
 import userController from './user.controller';
-import userSchema from './user.schema';
 
 import followerSchema from '../follower/follower.schema';
 
@@ -12,7 +11,7 @@ const createUserRoutes = (router) => {
   const userRouter = express.Router();
 
   userRouter.get('/', userController.listUsers);
-  userRouter.post('/', validator.body(userSchema), userController.signupUser);
+  // userRouter.post('/', validator.body(userSchema), userController.signupUser);
   userRouter.delete('/', userController.deleteAllUsers);
 
   userRouter.get('/:id', userController.getUser);

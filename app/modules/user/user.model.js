@@ -26,6 +26,7 @@ export default class UserModel extends SequelizeModule.Model {
           type: SequelizeModule.STRING,
           allowNull: false,
           notEmpty: true,
+          unique: true,
           validate: {
             isEmail: true,
           },
