@@ -1,28 +1,71 @@
-# Homework Task
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8hE1_Rdt15Vs311y7dljQKYUfMlbLqCsNXw&usqp=CAU" alt="Logo of the project" align="right">
 
-## Part #1
-Проинициализировать папку проекту через npm init, создать в отдельном файле класс работающий с данными в файле, который будет делать следующее: при инициализации класса на вход получает путь к папке для хранения данных и список сущностей, для каждой из которой должен быть свой файл в формате .json. Путь к папке должен задаваться через переменную окружения. Если такой папки не существует то создает. Если файла не существует то создает его. Класс должен иметь методы для create,get,update,delete операций для сущностей. Сущности должны иметь свой айди и доступ в файле к сущности через айди для вышеуказанных методов. Для начала можете создать две сущности User и Post, где юзер может создавать пост с полями id, text, authorId.
+# Homework from CHI Software &middot; Simple api server on express [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm)  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
 
-## Part #2
-Добавить Router Class, который имеет методы отвечающий за все http методы аля router.get('/users', userController.getAll); каждый вызов метода добавляет во внутренний массив роутера объект с урлом, методом и хэндлером. Роутер имеет специальный метод handleRequest(req, res) который будет вызываться при каждом запросе на сервер в http.createServer колбеке, проходится по всем созданым роутам и вызывать нужны хэдлер(контроллер). Роутер инициализируется до создания сервера. В сервисе осуществляется логи и запросы на данные. В контролере вызываются методы сервиса с данными. В моделе используется файл менеджер для работы с конкретной сущностью.
 
-## Part #3
-Переписать рабочий вариант на express.
+Api server written on express with sequelize and mongoose.
 
-## Part #4
-Создать mysql базу для текущего проекта. Сконфигурировать sequilize и создать миграции с указанной структурой. Добавить нужные модели для сущностей и обновить все методы сервисов.
+## Installing / Getting started
 
-## Part #5
-5.1. Необходимо реализовать авторизацию(auth) при помощи PassportJS. Нужно сделать аутентификацию (логин) и авторизацию(через jwt) + регистрацию. В пасспорте  понадобиться две стратегии: локальная(passport-local) для логина и jwt(passport-jwt). Также, после этого, надо реализовать авторизацию с refreshToken. Для этого надо будет хранить данные сессии связаные с refreshToken в базе(сам токен, expires, userId etc). Для хранения будет использоваться.
-
-5.2. Нужно интегрировать в проект MongoDB и Mongoose. Создать схемы для рефреш сессий и непосредственно сам auth модуль для всех манипуляций
-
-## Questions:
-1. Делая запрос на обновление юзера PATCH api/users/:id, и прокидывая туда данные которые не заявлены в модели, должен ли я их обрабатывать валидацией?
-2. При удалении сущности, должен ли я сначала узнать существует ли он и выбросить ошибку если не существует?
-```js
-await postService.findOne(...)
-await postService.destroy({})
+Use the following scripts to run project.
+```shell
+npm i
+npm start
 ```
-3. Стоит хешировать пароль при запросе в сервисе или в самой базе?
-4. Для шифрования лучше использовать нативную либу crypto или сторонние типа bcrypt?
+
+And also don't forget specify .env file by example that was provided in root of the project. 
+
+## Developing
+
+### Built With
+- express
+- passport
+- jsonwebtoken
+- sequelize
+- mongoose
+- config
+- jest
+- etc
+
+### Prerequisites
+For better expirience you need to provide connection to mysql db, with credential that are listed in .env.example file and also set up your mongodb connection through MONGO_URI.
+
+
+### Setting up Dev
+
+Here's a brief intro about what a developer must do in order to start developing
+the project further:
+
+```shell
+git clone https://github.com/your/your-project.git
+cd your-project/
+npm i
+npm start
+```
+
+And state what happens step-by-step. If there is any virtual environment, local server or database feeder needed, explain here.
+
+## Configuration
+
+All required configuration options are listed in .env.example file
+## Tests
+
+
+## Style guide
+
+For consistency code base were used opinionated code formatter - prettier. 
+
+## Database
+MySQL version 8.0.25
+
+Mongo: cloud based approach
+
+SQL: 
+* User
+* Post
+* Follower
+  
+Mongo:
+* RefreshToken
+
+
