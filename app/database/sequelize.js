@@ -4,7 +4,7 @@ import config from 'config';
 import UserModel from '../modules/user/user.model';
 import PostModel from '../modules/post/post.model';
 import FollowerModel from '../modules/follower/follower.model';
-console.log(config);
+
 const sequelize = new Sequelize(
   config.get('sql.database'),
   config.get('sql.username'),

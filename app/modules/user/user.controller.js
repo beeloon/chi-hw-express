@@ -1,16 +1,6 @@
 import userService from './user.service';
 
 class UserController {
-  async signupUser(req, res, next) {
-    try {
-      const user = await userService.createUser(req.body);
-
-      res.json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
-
   async getUser(req, res, next) {
     try {
       const { id } = req.params;

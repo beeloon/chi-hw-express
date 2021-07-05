@@ -1,6 +1,6 @@
 import config from 'config';
 
-import { BadRequest } from '../../errors';
+import { BadRequest, NotFoundException } from '../../errors';
 import userService from '../user/user.service';
 
 import tokenService from './token/token-service';
@@ -38,18 +38,26 @@ class AuthService {
     return tokens;
   }
 
-  async logout(username, password) {
-    try {
-    } catch (err) {
-      throw new BadRequest(err, 500);
-    }
+  async logout(refreshToken) {
+    const isTokenDeleted = await tokenService.delete(refreshToken);
+
+    return isTokenDeleted ? 200 : 204;
   }
 
-  async refresh(username, password) {
-    try {
-    } catch (err) {
-      throw new BadRequest(err, 500);
+  async refresh(refreshToken) {
+    const dbToken = await tokenService.find({ value: refreshToken });
+    if (!dbToken) {
+      throw new NotFoundException('RefreshToken Not Found');
     }
+
+    const jwtPayload = tokenService.validate(refreshToken);
+    const user = await userService.findUserById(jwtPayload.id);
+    if (!user) {
+      throw new NotFoundException(`User with id: ${jwtPayload.id} not found.`);
+    }
+
+    const tokens = await this.issueTokenPair(user);
+    return tokens;
   }
 
   async signup(createUserDto) {

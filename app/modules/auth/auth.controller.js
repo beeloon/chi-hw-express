@@ -1,5 +1,4 @@
 import authService from './auth.service';
-import userService from '../user/user.service';
 
 import { setCookie } from '../../utils';
 
@@ -15,17 +14,23 @@ class AuthController {
   }
 
   async logout(req, res) {
-    try {
-    } catch (err) {
-      throw new BadRequest(err, 500);
+    const { refreshToken } = req.cookies;
+    const statusOfTokenDeletion = await authService.logout(refreshToken);
+
+    if (statusOfTokenDeletion == 200) {
+      res.clearCookie('refreshToken');
     }
+
+    res.sendStatus(statusOfTokenDeletion);
   }
 
   async refresh(req, res) {
-    try {
-    } catch (err) {
-      throw new BadRequest(err, 500);
-    }
+    const { refreshToken } = req.cookies;
+    const tokens = await authService.refresh(refreshToken);
+
+    setCookie(res, tokens.refreshToken);
+
+    res.json(tokens);
   }
 
   async signup(req, res) {

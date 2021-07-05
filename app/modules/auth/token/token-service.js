@@ -24,26 +24,21 @@ class TokenService {
     }
   }
 
-  async remove(refreshToken) {
+  async delete(refreshToken) {
     try {
-      const { affected: numberOfDeletedRows } = await refreshTokenModel.delete({
+      const { deletedCount } = await refreshTokenModel.deleteOne({
         value: refreshToken,
       });
 
-      return numberOfDeletedRows > 0;
+      return deletedCount > 0;
     } catch (error) {
       throw new ConflictException(error.message);
     }
   }
 
-  async validate(token) {
+  validate(token) {
     try {
-      const refreshSecret = config.get('token.refresh.secret');
-      const userInfo = await jwt.verifyAsync(token, {
-        secret: refreshSecret,
-      });
-
-      return userInfo;
+      return jwt.verify(token, config.get('token.refresh.secret'));
     } catch (error) {
       throw new UnauthorizedException(error.message);
     }

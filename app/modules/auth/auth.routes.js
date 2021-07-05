@@ -14,22 +14,22 @@ const validator = createValidator();
 const createAuthRoutes = (router) => {
   const authRouter = express.Router();
 
+  authRouter.get(
+    '/refresh',
+    passport.authenticate('jwt'),
+    authController.refresh
+  );
+
   authRouter.post(
     '/login',
-    passport.authenticate('local', { failureRedirect: '/api/auth/login' }),
+    passport.authenticate('local'),
     authController.login
   );
 
   authRouter.delete(
     '/logout',
-    passport.authenticate('local', { failureRedirect: '/api/auth/login' }),
+    passport.authenticate('jwt'),
     authController.logout
-  );
-
-  authRouter.get(
-    '/refresh',
-    passport.authenticate('local', { failureRedirect: '/api/auth/login' }),
-    authController.refresh
   );
 
   authRouter.post('/signup', validator.body(userSchema), authController.signup);
