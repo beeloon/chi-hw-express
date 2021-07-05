@@ -2,11 +2,12 @@ import config from 'config';
 import express from 'express';
 import logger from 'morgan';
 import errorHandler from 'errorhandler';
-import passport from 'passport';
 import cookieParser from 'cookie-parser';
 
 import database from './database';
 import createRouter from './routes';
+
+import passport from './modules/auth/auth.strategies';
 
 const PORT = parseInt(config.get('port')) || 8000;
 const app = express();

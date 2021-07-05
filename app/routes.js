@@ -1,10 +1,11 @@
 import express from 'express';
-import passport from 'passport';
 
 import createUserRoutes from './modules/user/user.routes';
 import createPostRoutes from './modules/post/post.routes';
 import createAuthRoutes from './modules/auth/auth.routes';
 import createFollowerRoutes from './modules/follower/follower.routes';
+
+import passport from './modules/auth/auth.strategies';
 
 const createRouter = (app) => {
   const router = express.Router();

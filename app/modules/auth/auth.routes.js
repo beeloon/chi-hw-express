@@ -1,13 +1,10 @@
 import express from 'express';
-import passport from 'passport';
 import { createValidator } from 'express-joi-validation';
 
+import passport from './auth.strategies';
 import authController from './auth.controller';
-import usePassportStrategies from './auth.strategies';
 
 import userSchema from '../user/user.schema';
-
-usePassportStrategies(passport);
 
 const validator = createValidator();
 
