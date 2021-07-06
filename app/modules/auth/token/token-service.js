@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 
 import refreshTokenModel from './token.model';
 
+import { ConflictError } from '../../../errors';
+
 class TokenService {
   generateToken(payload, secret, expiresIn) {
     return jwt.sign(payload, secret, { expiresIn });
@@ -12,7 +14,7 @@ class TokenService {
     try {
       return await refreshTokenModel.findOne(option);
     } catch (err) {
-      throw new ConflictException(err.message);
+      throw new ConflictError(err.message);
     }
   }
 
@@ -20,7 +22,7 @@ class TokenService {
     try {
       return await refreshTokenModel.create({ userId, value: refreshToken });
     } catch (err) {
-      throw new ConflictException(err.message);
+      throw new ConflictError(err.message);
     }
   }
 
@@ -32,7 +34,7 @@ class TokenService {
 
       return deletedCount > 0;
     } catch (error) {
-      throw new ConflictException(error.message);
+      throw new ConflictError(error.message);
     }
   }
 

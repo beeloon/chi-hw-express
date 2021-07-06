@@ -76,7 +76,7 @@ class UserService {
 
       return user;
     } catch (err) {
-      throw new ApplicationError(err, 404);
+      throw new ConflictError(err, 404);
     }
   }
 
@@ -92,7 +92,7 @@ class UserService {
 
       return user;
     } catch (err) {
-      throw new ApplicationError(err, 404);
+      throw new ConflictError(err, 404);
     }
   }
 
@@ -105,7 +105,7 @@ class UserService {
 
       return userPostList;
     } catch (err) {
-      throw new ApplicationError(err, 404);
+      throw new ConflictError(err, 404);
     }
   }
 
@@ -118,7 +118,7 @@ class UserService {
 
       return followers;
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new ConflictError(err, 500);
     }
   }
 
@@ -131,7 +131,7 @@ class UserService {
 
       return updatedUser;
     } catch (err) {
-      throw new ApplicationError(err, 500);
+      throw new ConflictError(err, 500);
     }
   }
 }
